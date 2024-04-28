@@ -3,7 +3,8 @@ include(GenerateExportHeader)
 add_library(
   libFileDiff
   lib.c
-  vfs/file.c
+  logging/log.c
+  platform/win32/win32.c
 )
 add_library(dev::libFileDiff ALIAS libFileDiff)
 
@@ -25,12 +26,22 @@ set_target_properties(
   VISIBILITY_INLINES_HIDDEN YES
 )
 
-generate_export_header(libFileDiff EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/lib/FileDiff.h)
+generate_export_header(
+  libFileDiff
+  EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/lib/libFileDiffExport.h
+  BASE_NAME FD
+)
 
 if(NOT BUILD_SHARED_LIBS)
   target_compile_definitions(libFileDiff PUBLIC -DDEV_LIB_STATIC)
 else()
   target_compile_definitions(libFileDiff PUBLIC -DDEV_LIB_EXPORT)
+endif()
+
+if(WIN32)
+  target_compile_definitions(libFileDiff PUBLIC -DDEV_WIN32)
+else()
+  target_compile_definitions(libFileDiff PUBLIC -DUNIX)
 endif()
 
 if(BUILD_TESTING)

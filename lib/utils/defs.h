@@ -10,7 +10,7 @@
 #define FD_LIB_DEFS
 #pragma once
 
-#include "FileDiff.h"
+#include "libFileDiffExport.h"  // IWYU pragma: export
 
 #define FD_STRX(x) #x
 #define FD_STR(x)  FD_STRX(x)
