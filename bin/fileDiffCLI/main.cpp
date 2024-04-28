@@ -6,7 +6,7 @@ int main()
 {
     auto *file = fdlib_file_new(13, "res/data.txt");
 
-    std::fputs("fileDiffCLI");
+    std::puts("fileDiffCLI");
 
     fdlib_file_destroy(file);
 
