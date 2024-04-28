@@ -11,7 +11,7 @@ int CALLBACK WinMain(HINSTANCE hi, HINSTANCE hprev, LPSTR cmdline, int show)
 
     auto *file = fdlib_file_new(13, "res/data.txt");
 
-    MessageBox(0, file->path, "FileDiffGUI", MB_OK);
+    MessageBox(0, file->path, "fileDiffGUI", MB_OK);
 
     fdlib_file_destroy(file);
 
