@@ -23,16 +23,16 @@
     #define FD_EXTERN_END
 #endif /* __cplusplus */
 
-#ifndef local
-    #define local static
-#endif /* local */
+#ifndef FD_LOCAL
+    #define FD_LOCAL static
+#endif /* FD_LOCAL */
 
-#ifndef internal
-    #define internal static
-#endif /* internal */
+#ifndef FD_INTERNAL
+    #define FD_INTERNAL static
+#endif /* FD_INTERNAL */
 
-#ifndef global
-    #define global static
-#endif /* global */
+#ifndef FD_GLOBAL
+    #define FD_GLOBAL static
+#endif /* FD_GLOBAL */
 
 #endif /* FD_LIB_DEFS */

@@ -36,7 +36,7 @@ struct fdlib_file_info
     u64 access_time;
     u64 mod_time;
     usize namelen;
-    char const *name;
+    char *name;
 };
 
 #ifdef DEV_WIN32

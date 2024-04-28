@@ -22,12 +22,11 @@ FD_EXTERN_BEGIN
     Purpose:
         populates the 'fdlib_file_info' structure
     Arguments:
-        | type         | name        | description            |
-        | ------------ | ----------- | ---------------------- |
-        | usize        | pathlen     | length of the filename |
-        | char const * | path        | filename               |
+        | type         | name        | description |
+        | ------------ | ----------- | ----------- |
+        | char const * | path        | filename    |
    ------------------------------------------------------------------------- */
-FD_EXPORT struct fdlib_file_info fdlib_stat_file(usize pathlen, char const *path);
+FD_EXPORT struct fdlib_file_info fdlib_stat_file(char const *path);
 
 FD_EXTERN_END
 
