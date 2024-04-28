@@ -1,0 +1,86 @@
+include(CheckCXXCompilerFlag)
+
+macro(dev_enable_hardening target global ubsan_minrt)
+  message(STATUS " * enabling hardening (target ${target})")
+
+  if(MSVC)
+    set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} /sdl /DYNAMICBASE /guard:cf")
+    set(NEW_LINK_OPTIONS "${NEW_LINK_OPTIONS} /NXCOMPAT /CETCOMPAT")
+
+    message(STATUS " * MSVC flags: /sdl /DYNAMICBASE /guard:cf /NXCOMPAT /CETCOMPAT")
+  elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang|GNU")
+    set(NEW_CXX_DEFINITIONS "${NEW_CXX_DEFINITIONS} -D_GLIBCXX_ASSERTIONS")
+    set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3")
+
+    message(STATUS " * GLIBC++ assertions (vector[], string[], ...) enabled")
+    message(STATUS " * g++/clang _FORTIFY_SOURCE=3 enabled")
+
+    check_cxx_compiler_flag(-fstack-protector-strong STACK_PROT)
+
+    if(STACK_PROT)
+      set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -fstack-protector-strong")
+      message(STATUS " * g++/clang -fstack-protector-strong enabled")
+    else()
+      message(STATUS " * g++/clang -fstack-protector-strong not supported")
+    endif()
+
+    check_cxx_compiler_flag(-fcf-protection CF_PROT)
+
+    if(CF_PROT)
+      set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -fcf-protection")
+      message(STATUS " * g++/clang -fcf-protection enabled")
+    else()
+      message(STATUS " * g++/clang -fcf-protection not supported")
+    endif()
+
+    check_cxx_compiler_flag(-fcf-protection CLASH_PROT)
+
+    if(CLASH_PROT)
+      if(LINUX OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+        set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -fstack-clash-protection")
+        message(STATUS " * g++/clang -fstack-clash-protection enabled")
+      else()
+        message(STATUS " * g++/clang -fstack-clash-protection disabled (clang on non-Linux)")
+      endif()
+    else()
+      message(STATUS " * g++/clang -fstack-clash-protection not supported")
+    endif()
+  endif()
+
+  if(${ubsan_minrt})
+    check_cxx_compiler_flag("-fsanitize=undefined -fno-sanitize-recover=undefined -fsanitize-minimal-runtime" MINRT)
+
+    if(MINRT)
+      set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -fsanitize=undefined -fsanitize-minimal-runtime")
+      set(NEW_LINK_OPTIONS "${NEW_LINK_OPTIONS} -fsanitize=undefined -fsanitize-minimal-runtime")
+
+      if(NOT ${global})
+        set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -fno-sanitize-recover=undefined")
+        set(NEW_LINK_OPTIONS "${NEW_LINK_OPTIONS} -fno-sanitize-recover=undefined")
+      else()
+        message(STATUS " * -fno-sanitize-recover=undefined not enabled for global consumption")
+      endif()
+
+      message(STATUS " * ubsan minimal runtime enabled")
+    else()
+      message(STATUS " * ubsan minimal runtime not supported")
+    endif()
+  else()
+    message(STATUS " * ubsan minimal runtime not requested")
+  endif()
+
+  message(STATUS " * hardening compiler flags: ${NEW_COMPILE_OPTIONS}")
+  message(STATUS " * hardening compiler defines: ${NEW_CXX_DEFINITIONS}")
+  message(STATUS " * hardening linker flags: ${NEW_LINK_OPTIONS}")
+
+  if(${global})
+    message(STATUS " * setting hardening globally for all deps")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NEW_COMPILE_OPTIONS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NEW_CXX_DEFINITIONS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${NEW_LINK_OPTIONS}")
+  else()
+    target_compile_options(${target} INTERFACE ${NEW_COMPILE_OPTIONS})
+    target_compile_definitions(${target} INTERFACE ${NEW_CXX_DEFINITIONS})
+    target_link_options(${target} INTERFACE ${NEW_LINK_OPTIONS})
+  endif()
+endmacro()

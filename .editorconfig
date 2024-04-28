@@ -1,0 +1,23 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+tab_width = 2
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+
+[Makefile]
+indent_style = tab
+
+[Makelib]
+indent_style = tab
+
+[*.{c,h,cpp,hpp,tpp}]
+indent_size = 4
+tab_width = 4
+
+[{CMakeLists.txt,*.cmake}]
+indent_size = 2
+tab_width = 2
