@@ -10,7 +10,6 @@
 #define FD_PLATFORM_OS
 #pragma once
 
-#include "types/aliases.h"
 #include "utils/defs.h"
 
 FD_EXTERN_BEGIN
@@ -25,24 +24,29 @@ FD_EXTERN_BEGIN
     Fields:
         | type         | name        | description                 |
         | ------------ | ----------- | --------------------------- |
-        | u64          | create_time | file creation timestamp     |
-        | u64          | access_time | file access timestamp       |
-        | u64          | mod_time    | file modification timestamp |
-        | usize        | namelen     | length of the filename      |
+        | uint64_t     | create_time | file creation timestamp     |
+        | uint64_t     | access_time | file access timestamp       |
+        | uint64_t     | mod_time    | file modification timestamp |
+        | size_t       | namelen     | length of the filename      |
         | char const * | name        | filename                    |
    ------------------------------------------------------------------------- */
 struct fdlib_file_info
 {
-    u64 access_time;
-    u64 mod_time;
-    usize namelen;
+    uint64_t create_time;
+    uint64_t access_time;
+    uint64_t mod_time;
+    size_t namelen;
     char *name;
 };
 
 #ifdef DEV_WIN32
     #include "win32/win32.h"  // IWYU pragma: export
-#else                         // Assuming unix/linux
-    #include "unix/unix.h"    // IWYU pragma: export
+
+    #define fdlib_stat_file(p) (fdlib_win32_stat_file(p))
+#else
+    #include "unix/unix.h"  // IWYU pragma: export
+
+    #define fdlib_stat_file(p) (fdlib_unix_stat_file(p))
 #endif
 
 FD_EXTERN_END
