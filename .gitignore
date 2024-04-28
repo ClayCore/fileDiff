@@ -1,6 +1,8 @@
 /build/*
 /target/*
 
+/private_data/*
+
 CMakeUserPresets.json
 
 .vs/
