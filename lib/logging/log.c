@@ -18,14 +18,14 @@ typedef struct
 {
     fdlib_log_func func;
     void *data;
-    i32 level;
+    int32_t level;
 } callback;
 
 FD_GLOBAL struct
 {
     void *data;
     fdlib_log_lock lock;
-    i32 level;
+    int32_t level;
     bool quiet;
     callback callbacks[FD_LOG_MAXCB];
 } FD_LOGGER;
@@ -88,7 +88,7 @@ FD_INTERNAL void record_init(fdlib_log_record *r, void *s)
     r->stream = s;
 }
 
-FD_NO_EXPORT char const *fdlib_loglevel_str(i32 l)
+FD_NO_EXPORT char const *fdlib_loglevel_str(int32_t l)
 {
     return FD_LOG_LEVELS[l];
 }
@@ -99,7 +99,7 @@ FD_NO_EXPORT void fdlib_log_set_lock(fdlib_log_lock fn, void *d)
     FD_LOGGER.data = d;
 }
 
-FD_NO_EXPORT void fdlib_log_set_level(i32 l)
+FD_NO_EXPORT void fdlib_log_set_level(int32_t l)
 {
     FD_LOGGER.level = l;
 }
@@ -109,9 +109,9 @@ FD_NO_EXPORT void fdlib_log_set_quiet(bool is_quiet)
     FD_LOGGER.quiet = is_quiet;
 }
 
-FD_NO_EXPORT i32 fdlib_log_add_callback(fdlib_log_func fn, void *d, i32 l)
+FD_NO_EXPORT int32_t fdlib_log_add_callback(fdlib_log_func fn, void *d, int32_t l)
 {
-    for (i32 i = 0; i < FD_LOG_MAXCB; ++i) {
+    for (int32_t i = 0; i < FD_LOG_MAXCB; ++i) {
         if (!FD_LOGGER.callbacks[i].func) {
             FD_LOGGER.callbacks[i] = (callback) {
                 .func  = fn,  //
@@ -126,12 +126,12 @@ FD_NO_EXPORT i32 fdlib_log_add_callback(fdlib_log_func fn, void *d, i32 l)
     return -1;
 }
 
-FD_NO_EXPORT i32 fdlib_log_add_file(FILE *fp, i32 l)
+FD_NO_EXPORT int32_t fdlib_log_add_file(FILE *fp, int32_t l)
 {
     return fdlib_log_add_callback(callback_stdout, fp, l);
 }
 
-FD_NO_EXPORT void fdlib_log(i32 lv, char *fp, i32 ln, char *fmt, ...)
+FD_NO_EXPORT void fdlib_log(int32_t lv, char *fp, int32_t ln, char *fmt, ...)
 {
     fdlib_log_record r = {
         .fmt   = fmt,  //
@@ -142,7 +142,7 @@ FD_NO_EXPORT void fdlib_log(i32 lv, char *fp, i32 ln, char *fmt, ...)
 
     logger_lock();
 
-    if (!FD_LOGGER.quiet and lv >= FD_LOGGER.level) {
+    if (!FD_LOGGER.quiet && lv >= FD_LOGGER.level) {
         record_init(&r, stderr);
 
         va_start(r.ap, fmt);
@@ -150,7 +150,7 @@ FD_NO_EXPORT void fdlib_log(i32 lv, char *fp, i32 ln, char *fmt, ...)
         va_end(r.ap);
     }
 
-    for (i32 i = 0; i < FD_LOG_MAXCB and FD_LOGGER.callbacks[i].func; ++i) {
+    for (int32_t i = 0; i < FD_LOG_MAXCB && FD_LOGGER.callbacks[i].func; ++i) {
         callback *cb = &FD_LOGGER.callbacks[i];
         if (lv >= cb->level) {
             record_init(&r, cb->data);

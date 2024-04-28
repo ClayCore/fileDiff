@@ -11,14 +11,13 @@
 #pragma once
 
 #include "platform/os.h"
-#include "types/aliases.h"
 #include "utils/defs.h"
 
 FD_EXTERN_BEGIN
 
 /* ---------------------------------------------------------------------------
     Name:
-        fdlib_stat_file
+        fdlib_win32_stat_file
     Purpose:
         populates the 'fdlib_file_info' structure
     Arguments:
@@ -26,7 +25,7 @@ FD_EXTERN_BEGIN
         | ------------ | ----------- | ----------- |
         | char const * | path        | filename    |
    ------------------------------------------------------------------------- */
-FD_EXPORT struct fdlib_file_info fdlib_stat_file(char const *path);
+FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path);
 
 FD_EXTERN_END
 

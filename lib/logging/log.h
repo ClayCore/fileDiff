@@ -10,12 +10,12 @@
 #define FD_LOGGING_LOG
 #pragma once
 
-#include "types/aliases.h"
 #include "utils/defs.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
+
 
 #ifndef _CRT_SECURE_NO_WARNINGS
     #define _CRT_SECURE_NO_WARNINGS
@@ -46,26 +46,26 @@ FD_NO_EXPORT typedef struct
     struct tm *time;
 
     void *stream;
-    i32 line;
-    i32 level;
+    int32_t line;
+    int32_t level;
 } fdlib_log_record;
 
 typedef void (*fdlib_log_func)(fdlib_log_record *);
 typedef void (*fdlib_log_lock)(bool, void *);
 
-FD_NO_EXPORT char const *fdlib_loglevel_str(i32);
+FD_NO_EXPORT char const *fdlib_loglevel_str(int32_t);
 
 FD_NO_EXPORT void fdlib_log_set_lock(fdlib_log_lock, void *);
 
-FD_NO_EXPORT void fdlib_log_set_level(i32);
+FD_NO_EXPORT void fdlib_log_set_level(int32_t);
 
 FD_NO_EXPORT void fdlib_log_set_quiet(bool);
 
-FD_NO_EXPORT i32 fdlib_log_add_callback(fdlib_log_func, void *, i32);
+FD_NO_EXPORT int32_t fdlib_log_add_callback(fdlib_log_func, void *, int32_t);
 
-FD_NO_EXPORT i32 fdlib_log_add_file(FILE *, i32);
+FD_NO_EXPORT int32_t fdlib_log_add_file(FILE *, int32_t);
 
-FD_NO_EXPORT void fdlib_log(i32, char *, i32, char *, ...);
+FD_NO_EXPORT void fdlib_log(int32_t, char *, int32_t, char *, ...);
 
 FD_EXTERN_END
 

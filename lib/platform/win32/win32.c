@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 
-FD_EXPORT struct fdlib_file_info fdlib_stat_file(char const *path)
+FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path)
 {
     struct fdlib_file_info fi = { 0 };
 
@@ -38,8 +38,8 @@ FD_EXPORT struct fdlib_file_info fdlib_stat_file(char const *path)
     FD_LOG_INFO("in_path: \'%s\'", path);
     FD_LOG_INFO("out_path: \'%s\'", out_ptr);
 
-    usize out_path_len = strlen(out);
-    fi.namelen         = out_path_len;
+    size_t out_path_len = strlen(out);
+    fi.namelen          = out_path_len;
 
     if (part != NULL) {
         FD_LOG_INFO("part_path: \'%s\'", *part);
