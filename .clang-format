@@ -42,13 +42,14 @@ FixNamespaceComments: true
 IndentCaseLabels: false
 IndentRequiresClause: false
 IndentWidth: 4
-IndentWrappedFunctionNames: true
+IndentWrappedFunctionNames: false
 IndentPPDirectives: BeforeHash
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
+PenaltyReturnTypeOnItsOwnLine: 0
 PointerAlignment: Right
 ReflowComments: true
 RequiresClausePosition: OwnLine
