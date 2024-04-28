@@ -1,8 +1,9 @@
-#include "platform/win32/win32.h"
+#include "platform/os.h"
+#include "types/aliases.hpp"
 
 #include <iostream>
 
-int main()
+auto main() -> i32
 {
     auto stat = fdlib_stat_file("private_data\\test.txt");
 
