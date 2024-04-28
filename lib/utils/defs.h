@@ -12,6 +12,11 @@
 
 #include "libFileDiffExport.h"  // IWYU pragma: export
 
+#include <inttypes.h>  // IWYU pragma: keep
+#include <stdbool.h>   // IWYU pragma: keep
+#include <stddef.h>    // IWYU pragma: keep
+#include <stdint.h>    // IWYU pragma: keep
+
 #define FD_STRX(x) #x
 #define FD_STR(x)  FD_STRX(x)
 
