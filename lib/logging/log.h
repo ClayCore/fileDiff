@@ -16,11 +16,6 @@
 #include <stdio.h>
 #include <time.h>
 
-
-#ifndef _CRT_SECURE_NO_WARNINGS
-    #define _CRT_SECURE_NO_WARNINGS
-#endif /* _CRT_SECURE_NO_WARNINGS */
-
 #define FD_LOG_TRACE(...) (fdlib_log(FD_LL_TRACE, __FILE__, __LINE__, __VA_ARGS__))
 #define FD_LOG_DEBUG(...) (fdlib_log(FD_LL_DEBUG, __FILE__, __LINE__, __VA_ARGS__))
 #define FD_LOG_INFO(...)  (fdlib_log(FD_LL_INFO, __FILE__, __LINE__, __VA_ARGS__))
@@ -29,7 +24,8 @@
 
 FD_EXTERN_BEGIN
 
-FD_NO_EXPORT enum fdlib_loglevel {
+enum fdlib_loglevel
+{
     FD_LL_TRACE,
     FD_LL_DEBUG,
     FD_LL_INFO,
@@ -37,7 +33,7 @@ FD_NO_EXPORT enum fdlib_loglevel {
     FD_LL_ERROR,
 };
 
-FD_NO_EXPORT typedef struct
+typedef struct
 {
     va_list ap;
     char *fmt;
@@ -69,4 +65,4 @@ FD_NO_EXPORT void fdlib_log(int32_t, char *, int32_t, char *, ...);
 
 FD_EXTERN_END
 
-#endif /* FD_LOGGING_LOG */
+#endif /* !FD_LOGGING_LOG */
