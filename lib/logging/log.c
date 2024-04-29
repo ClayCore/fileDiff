@@ -9,10 +9,14 @@
 #include "log.h"
 
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 #define FD_LOG_MAXCB (64)
-#define FD_LOG_BUFSZ (16)
+#define FD_LOG_BUFSZ (64)
+
 
 typedef struct
 {
@@ -73,7 +77,7 @@ FD_INTERNAL void callback_stdout(fdlib_log_record *r)
         r->file, r->line              //
     );
 
-    vfprintf(r->stream, r->fmt, r->ap);
+    vfprintf_s(r->stream, r->fmt, r->ap);
     fprintf(r->stream, "\n");
     fflush(r->stream);
 }
@@ -81,8 +85,9 @@ FD_INTERNAL void callback_stdout(fdlib_log_record *r)
 FD_INTERNAL void record_init(fdlib_log_record *r, void *s)
 {
     if (!r->time) {
-        time_t tm = time(NULL);
-        r->time   = localtime(&tm);
+        time_t t = time(NULL);
+
+        r->time = localtime(&t);
     }
 
     r->stream = s;
