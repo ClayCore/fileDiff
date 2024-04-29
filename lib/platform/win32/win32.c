@@ -6,23 +6,26 @@
         thin wrapper around win32 specific io operations
    ========================================================================= */
 
-#include "win32.h"
-#include "logging/log.h"
+#ifdef DEV_WIN32
 
-#ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-#endif /* WIN32_LEAN_AND_MEAN */
+    #include "win32.h"
+    #include "logging/log.h"
 
-#ifndef _UNICODE
-    #define _UNICODE
-#endif /* _UNICODE */
-#ifndef UNICODE
-    #define UNICODE
-#endif /* UNICODE */
+    #ifndef WIN32_LEAN_AND_MEAN
+        #define WIN32_LEAN_AND_MEAN
+    #endif /* WIN32_LEAN_AND_MEAN */
 
-#include <windows.h>
+    #ifndef _UNICODE
+        #define _UNICODE
+    #endif /* _UNICODE */
+    #ifndef UNICODE
+        #define UNICODE
+    #endif /* UNICODE */
 
-#include <stdlib.h>
+    #include <windows.h>
+
+    #include <stdlib.h>
+    #include <string.h>
 
 
 FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path)
@@ -56,3 +59,5 @@ FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path)
 
     return fi;
 }
+
+#endif /* DEV_WIN32 */

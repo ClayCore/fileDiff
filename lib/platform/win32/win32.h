@@ -29,4 +29,4 @@ FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path);
 
 FD_EXTERN_END
 
-#endif /* FD_PLATFORM_WIN32 */
+#endif /* !FD_PLATFORM_WIN32 */
