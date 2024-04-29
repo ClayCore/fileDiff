@@ -1,16 +1,32 @@
 /* ===========================================================================
     Information:
-        @(#)platform/unix.h   0.1.0 2024/04/28
-        lib/platform/unix.h   0.1.0 <claymore>
+        @(#)platform/win32.h   0.1.0 2024/04/28
+        lib/platform/win32.h   0.1.0 <claymore>
     Description:
-        thin wrapper around unix specific io operations
+        thin wrapper around win32 specific io operations
    ========================================================================= */
 
 #ifndef FD_PLATFORM_UNIX
 #define FD_PLATFORM_UNIX
 #pragma once
 
+#include "platform/os.h"
 #include "utils/defs.h"
 
+FD_EXTERN_BEGIN
 
-#endif /* FD_PLATFORM_UNIX */
+/* ---------------------------------------------------------------------------
+    Name:
+        fdlib_unix_stat_file
+    Purpose:
+        populates the 'fdlib_file_info' structure
+    Arguments:
+        | type         | name        | description |
+        | ------------ | ----------- | ----------- |
+        | char const * | path        | filename    |
+   ------------------------------------------------------------------------- */
+FD_EXPORT struct fdlib_file_info fdlib_unix_stat_file(char const *path);
+
+FD_EXTERN_END
+
+#endif /* !FD_PLATFORM_UNIX */
