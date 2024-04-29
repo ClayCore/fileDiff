@@ -22,33 +22,35 @@ FD_EXTERN_BEGIN
 
         timestamps are stored as 64 bit unsigned integers
     Fields:
-        | type         | name        | description                 |
-        | ------------ | ----------- | --------------------------- |
-        | uint64_t     | create_time | file creation timestamp     |
-        | uint64_t     | access_time | file access timestamp       |
-        | uint64_t     | mod_time    | file modification timestamp |
-        | size_t       | namelen     | length of the filename      |
-        | char const * | name        | filename                    |
+        | type     | name        | description                 |
+        | -------- | ----------- | --------------------------- |
+        | uint64_t | create_time | file creation timestamp     |
+        | uint64_t | access_time | file access timestamp       |
+        | uint64_t | mod_time    | file modification timestamp |
+        | size_t   | namelen     | length of the filename      |
+        | char *   | name        | filename                    |
    ------------------------------------------------------------------------- */
 struct fdlib_file_info
 {
-    uint64_t create_time;
-    uint64_t access_time;
-    uint64_t mod_time;
+    int64_t create_time;
+    int64_t access_time;
+    int64_t mod_time;
     size_t namelen;
     char *name;
 };
 
 #ifdef DEV_WIN32
+
     #include "win32/win32.h"  // IWYU pragma: export
 
     #define fdlib_stat_file(p) (fdlib_win32_stat_file(p))
-#else
+#else /* !DEV_WIN32 */
+
     #include "unix/unix.h"  // IWYU pragma: export
 
     #define fdlib_stat_file(p) (fdlib_unix_stat_file(p))
-#endif
+#endif /* DEV_WIN32 */
 
 FD_EXTERN_END
 
-#endif /* FD_PLATFORM_OS */
+#endif /* !FD_PLATFORM_OS */
