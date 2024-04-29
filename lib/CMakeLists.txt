@@ -2,9 +2,10 @@ include(GenerateExportHeader)
 
 add_library(
   libFileDiff
-  lib.c
   logging/log.c
+  strbuf/str.c
   platform/win32/win32.c
+  platform/unix/unix.c
 )
 add_library(dev::libFileDiff ALIAS libFileDiff)
 
