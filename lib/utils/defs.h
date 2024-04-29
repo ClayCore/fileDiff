@@ -10,6 +10,10 @@
 #define FD_LIB_DEFS
 #pragma once
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+    #define _CRT_SECURE_NO_WARNINGS
+#endif /* !_CRT_SECURE_NO_WARNINGS */
+
 #include "libFileDiffExport.h"  // IWYU pragma: export
 
 #include <inttypes.h>  // IWYU pragma: keep
@@ -23,21 +27,21 @@
 #ifdef __cplusplus
     #define FD_EXTERN_BEGIN extern "C" {
     #define FD_EXTERN_END   }
-#else
+#else /* __cplusplus */
     #define FD_EXTERN_BEGIN
     #define FD_EXTERN_END
-#endif /* __cplusplus */
+#endif /* !__cplusplus */
 
 #ifndef FD_LOCAL
     #define FD_LOCAL static
-#endif /* FD_LOCAL */
+#endif /* !FD_LOCAL */
 
 #ifndef FD_INTERNAL
     #define FD_INTERNAL static
-#endif /* FD_INTERNAL */
+#endif /* !FD_INTERNAL */
 
 #ifndef FD_GLOBAL
     #define FD_GLOBAL static
-#endif /* FD_GLOBAL */
+#endif /* !FD_GLOBAL */
 
-#endif /* FD_LIB_DEFS */
+#endif /* !FD_LIB_DEFS */
