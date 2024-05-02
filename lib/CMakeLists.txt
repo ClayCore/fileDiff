@@ -3,7 +3,6 @@ include(GenerateExportHeader)
 add_library(
   libFileDiff
   logging/log.c
-  strbuf/str.c
   platform/win32/win32.c
   platform/unix/unix.c
 )
