@@ -34,7 +34,7 @@ FD_GLOBAL struct
     callback callbacks[FD_LOG_MAXCB];
 } FD_LOGGER;
 
-FD_INTERNAL char const *const FD_LOG_LEVELS[] = {
+FD_GLOBAL char const *const FD_LOG_LEVELS[] = {
     [FD_LL_TRACE] = "TRACE",  //
     [FD_LL_DEBUG] = "DEBUG",  //
     [FD_LL_INFO]  = "INFO",   //
@@ -42,7 +42,7 @@ FD_INTERNAL char const *const FD_LOG_LEVELS[] = {
     [FD_LL_ERROR] = "ERROR",  //
 };
 
-FD_INTERNAL char const *const FD_LOG_COLORS[] = {
+FD_GLOBAL char const *const FD_LOG_COLORS[] = {
     [FD_LL_TRACE] = "\x1b[94m",  //
     [FD_LL_DEBUG] = "\x1b[36m",  //
     [FD_LL_INFO]  = "\x1b[32m",  //
