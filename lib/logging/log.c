@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define FD_LOG_MAXCB (64)
 #define FD_LOG_BUFSZ (64)
 
