@@ -14,6 +14,7 @@
 
 FD_EXTERN_BEGIN
 
+
 /* ---------------------------------------------------------------------------
     Name:
         fdlib_file_info
@@ -41,9 +42,11 @@ struct fdlib_file_info
 
 #ifdef DEV_WIN32
 
-    #include "win32/win32.h"  // IWYU pragma: export
+    #include "win32/file.h"  // IWYU pragma: export
+    #include "win32/path.h"  // IWYU pragma: export
 
-    #define fdlib_stat_file(p) (fdlib_win32_stat_file(p))
+    #define fdlib_stat_file(p)      (fdlib_win32_stat_file(p))
+    #define fdlib_normalize_path(p) (fdlib_win32_normalize_path(p))
 #else /* !DEV_WIN32 */
 
     #include "unix/unix.h"  // IWYU pragma: export

@@ -22,6 +22,10 @@
 #include <stdint.h>    // IWYU pragma: keep
 #include <string.h>    // IWYU pragma: keep
 
+#if !defined(DEV_UNIX) && defined(DEV_WIN32)
+typedef int_least64_t ssize_t;
+#endif /* !DEV_UNIX && DEV_WIN32 */
+
 #define FD_STRX(x) #x
 #define FD_STR(x)  FD_STRX(x)
 
@@ -49,6 +53,8 @@
         memcpy(_swap_bp, _swap_buf, sizeof(a));                         \
     } while (0)
 // clang-format on
+
+#define FD_ARRAYSZ(x)           ((sizeof(x)) / (sizeof(*x)))
 
 #define FD_BITSIZEOF(x)         (CHAR_BIT * sizeof(x))
 
