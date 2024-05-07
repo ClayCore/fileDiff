@@ -12,6 +12,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern int _db_read_generic(void **, void *, size_t);
+extern int _db_read_header(void **stream, struct fd_db_header *h);
+extern int _db_read_config(void **stream, struct fd_db_config *c);
+extern int _db_read_dir_entry(void **stream, struct fd_db_direntry *de);
+extern int _db_read_entry(void **stream, struct fd_db_entry *e);
+
 
 char const *FD_DB_ERROR_STR[] = {
     [FD_DBERR_NOFILE]   = "file not found",             //
@@ -35,7 +41,7 @@ char const *fd_db_strerror(int code)
 
 int fd_db_open(void **stream, int mode)
 {
-    int retval      = 0;
+    int retval      = FD_DBERR_SUCCESS;
     errno_t errcode = 0;
 
     switch (mode) {
@@ -63,7 +69,7 @@ int fd_db_open(void **stream, int mode)
 
 int fd_db_close(void **stream)
 {
-    int retval = 0;
+    int retval = FD_DBERR_SUCCESS;
 
     if (!(*stream)) {
         retval = FD_DBERR_HANDLE;
@@ -77,136 +83,46 @@ int fd_db_close(void **stream)
     return retval;
 }
 
-int fd_db_read(void **stream)
+int fd_db_read(void **s)
 {
-    int retval   = 0;
-    size_t terr  = 0;
-    uint8_t *buf = NULL;
+    int retval = FD_DBERR_SUCCESS;
 
-    struct fd_db_header head;
-    size_t head_size = sizeof(head);
+    struct fd_db_header *head         = NULL;
+    struct fd_db_config *config       = NULL;
+    struct fd_db_direntry *direntries = NULL;
+    struct fd_db_entry *entries       = NULL;
 
-    struct fd_db_config config;
-    size_t config_size = sizeof(config);
+    size_t head_size      = sizeof(head);
+    size_t config_size    = sizeof(config);
+    size_t dir_entry_size = sizeof *direntries;
+    size_t entry_size     = sizeof *entries;
 
-    struct fd_db_direntry *dir_entries;
-    size_t dir_entry_size = sizeof *dir_entries;
-
-    struct fd_db_entry *entries;
-    size_t entry_size = sizeof *entries;
-
-
-    if (!(*stream)) {
-        retval = FD_DBERR_HANDLE;
-        FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(stream));
-
+    head = malloc(head_size);
+    if ((retval = _db_read_header(s, head)) != FD_DBERR_SUCCESS)
         return retval;
+
+    config = malloc(config_size);
+    if ((retval = _db_read_config(s, config)) != FD_DBERR_SUCCESS)
+        return retval;
+
+    direntries = calloc(head->dir_entries, dir_entry_size);
+    for (size_t i = 0; i < head->dir_entries; ++i) {
+        if ((retval = _db_read_dir_entry(s, &direntries[i])) != FD_DBERR_SUCCESS)
+            return retval;
     }
 
-    buf = malloc(head_size);
-    if (!buf) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
+    entries = calloc(head->entries, entry_size);
+    for (size_t i = 0; i < head->entries; ++i) {
+        if ((retval = _db_read_entry(s, &entries[i])) != FD_DBERR_SUCCESS)
+            return retval;
     }
-
-    terr = fread(buf, head_size, 1, *stream);
-    if (terr != 1) {
-        retval = FD_DBERR_READ;
-
-        goto error;
-    }
-
-    memcpy(&head, buf, head_size);
-
-
-    for (int i = 0; i < FD_DB_MAGIC_SIZE; ++i) {
-        if (head.magic[i] != FD_DB_MAGIC[i]) {
-            retval = FD_DBERR_MAGIC;
-
-            goto error;
-        }
-    }
-
-    buf = realloc(buf, config_size);
-    if (!buf) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
-    }
-
-    terr = fread(buf, config_size, 1, *stream);
-    if (terr != 1) {
-        retval = FD_DBERR_READ;
-
-        goto error;
-    }
-
-    memcpy(&config, buf, config_size);
-
-
-    buf = realloc(buf, dir_entry_size * head.dir_entries);
-    if (!buf) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
-    }
-
-    terr = fread(buf, dir_entry_size, head.dir_entries, *stream);
-    if (terr != head.dir_entries) {
-        retval = FD_DBERR_READ;
-
-        goto error;
-    }
-
-    dir_entries = calloc(head.dir_entries, dir_entry_size);
-    if (!dir_entries) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
-    }
-
-    for (size_t i = 0; i < head.dir_entries; ++i) {
-        memcpy(&dir_entries[i], buf + (i * dir_entry_size), dir_entry_size);
-    }
-
-
-    buf = realloc(buf, entry_size * head.entries);
-    if (!buf) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
-    }
-
-    terr = fread(buf, entry_size, head.entries, *stream);
-    if (terr != head.entries) {
-        retval = FD_DBERR_READ;
-
-        goto error;
-    }
-
-    entries = calloc(head.entries, entry_size);
-    if (!entries) {
-        retval = FD_DBERR_ALLOC;
-
-        goto error;
-    }
-
-    for (size_t i = 0; i < head.entries; ++i) {
-        memcpy(&entries[i], buf + (i * entry_size), entry_size);
-    }
-
-    return retval;
-
-error:
-    FD_LOG_ERROR("%s", fd_db_strerror(retval));
 
     return retval;
 }
 
 int fd_db_write(void **stream)
 {
-    int retval = 0;
+    int retval = FD_DBERR_SUCCESS;
 
     return retval;
 }
