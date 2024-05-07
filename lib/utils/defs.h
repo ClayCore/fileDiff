@@ -14,6 +14,12 @@
     #define _CRT_SECURE_NO_WARNINGS
 #endif /* !_CRT_SECURE_NO_WARNINGS */
 
+#ifndef _MSC_VER
+    #ifdef __STDC_LIB_EXT1__
+        #define __STDC_WANT_LIB_EXT1__ 1
+    #endif /* __STC_LIB_EXT1__ */
+#endif     /* !_MSC_VER */
+
 #include "libFileDiffExport.h"  // IWYU pragma: export
 
 #include <inttypes.h>  // IWYU pragma: keep
@@ -64,8 +70,16 @@ typedef int_least64_t ssize_t;
 #define FD_SIGNED_ADDOF(a, b)   ((b > FD_MAX_SIGNED_VAL(a) - (a)))
 #define FD_UNSIGNED_ADDOF(a, b) ((b > FD_MAX_UNSIGNED_VAL(a) - (a)))
 
-#define FD_LOCAL                static
-#define FD_GLOBAL               static
-#define FD_INTERNAL             static inline
+#if defined __has_attribute
+    #if __has_attribute(aligned)
+        #define FD_ALIGNED __attribute__((aligned(sizeof(void *))))
+    #else
+        #define FD_ALIGNED
+    #endif /* __has_attribute(aligned) */
+#endif     /* __has_attribute */
+
+#define FD_LOCAL    static
+#define FD_GLOBAL   static
+#define FD_INTERNAL static inline
 
 #endif /* !FD_LIB_DEFS */
