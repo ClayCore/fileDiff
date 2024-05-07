@@ -10,9 +10,6 @@
 #define FD_PLATFORM_WIN32
 #pragma once
 
-#include "platform/os.h"
-#include "utils/defs.h"
-
 // exported headers
 #include "file.h"  // IWYU pragma: export
 #include "path.h"  // IWYU pragma: export

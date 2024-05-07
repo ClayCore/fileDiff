@@ -59,9 +59,9 @@ enum FD_WIN32_PATH_TYPE
         | ------ | ---- | ----------------- |
         | char * | path | unnormalized path |
     Return value:
-        | type   | description     |
-        | ------ | --------------- |
-        | char * | normalized path |
+        | type   | description              |
+        | ------ | ------------------------ |
+        | char * | normalized path          |
    ------------------------------------------------------------------------- */
 FD_EXPORT char *fdlib_win32_normalize_path(char *path);
 

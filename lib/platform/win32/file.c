@@ -25,6 +25,7 @@
 
 #include "file.h"
 #include "logging/log.h"
+#include "platform/os.h"
 #include "utils/defs.h"
 
 
