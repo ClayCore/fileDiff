@@ -3,9 +3,14 @@ include(GenerateExportHeader)
 add_library(
   libFileDiff
   logging/log.c
+  db/db.c
+  $<$<PLATFORM_ID:Windows>:
   platform/win32/file.c
   platform/win32/path.c
+  >
+  $<$<PLATFORM_ID:Linux>:
   platform/unix/unix.c
+  >
 )
 add_library(dev::libFileDiff ALIAS libFileDiff)
 
