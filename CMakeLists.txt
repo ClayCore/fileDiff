@@ -39,8 +39,9 @@ string(SUBSTRING "${GIT_SHA}" 0 8 GIT_SHORT_SHA)
 target_compile_features(dev_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 target_compile_features(dev_options INTERFACE c_std_${CMAKE_C_STANDARD})
 
-# add_library(dev::options ALIAS dev_options)
-# add_library(dev::warnings ALIAS dev_warnings)
+add_library(dev::dev_options ALIAS dev_options)
+add_library(dev::dev_warnings ALIAS dev_warnings)
+
 add_subdirectory(config)
 
 set(BUILD_SHARED_LIBS ON)
@@ -52,8 +53,6 @@ add_subdirectory(bin)
 if(NOT PROJECT_IS_TOP_LEVEL)
   return()
 endif()
-
-include(CTest)
 
 if(MSVC)
   dev_get_all_installable_targets(all_targets)
