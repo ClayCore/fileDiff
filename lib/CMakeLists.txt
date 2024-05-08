@@ -47,12 +47,23 @@ endif()
 
 if(WIN32)
   target_compile_definitions(libFileDiff PUBLIC -DDEV_WIN32)
+
+  # Disable msvcrt nonsense
+  target_compile_definitions(
+    libFileDiff
+    PRIVATE
+    -D_CRT_SECURE_NO_WARNINGS
+    -D_CRT_SECURE_NO_DEPRECATE
+    -D_CRT_NONSTDC_NO_WARNINGS
+  )
 else()
-  target_compile_definitions(libFileDiff PUBLIC -DUNIX)
+  target_compile_definitions(libFileDiff PUBLIC -DDEV_UNIX)
 endif()
 
-if(BUILD_TESTING)
-  message(TRACE "Building tests...")
+include(CTest)
+
+if(BUILD_TESTING AND PROJECT_IS_TOP_LEVEL)
+  message(AUTHOR_WARNING "Building tests for libFileDiff...")
   add_subdirectory(test)
 endif()
 
