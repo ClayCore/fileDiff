@@ -3,8 +3,9 @@ include(GenerateExportHeader)
 add_library(
   libFileDiff
   logging/log.c
-  db/db_read.c
   db/db.c
+  db/db_write.c
+  db/db_read.c
   $<$<PLATFORM_ID:Windows>:
   platform/win32/file.c
   platform/win32/path.c
