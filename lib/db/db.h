@@ -25,7 +25,8 @@ enum FD_DB_ERRORS
     FD_DBERR_WRITE,
     FD_DBERR_MINVALID,
     FD_DBERR_HANDLE,
-    FD_DBERR_MAGIC
+    FD_DBERR_MAGIC,
+    FD_DBERR_NULLBUF,
 };
 
 enum FD_DB_OPENMODE
@@ -40,8 +41,8 @@ struct fd_db_header
 {
     uint8_t magic[FD_DB_MAGIC_SIZE];
     uint32_t version;
-    size_t dir_entries;
-    size_t entries;
+    size_t dirs_count;
+    size_t files_count;
 } FD_ALIGNED;
 
 struct fd_db_config
@@ -51,31 +52,39 @@ struct fd_db_config
     char path[FD_DB_PATH_MAXLEN];
 } FD_ALIGNED;
 
-struct fd_db_direntry
+struct fd_db_dir
 {
     uint64_t time_sec;
     uint32_t time_nsec;
     char path[FD_DB_PATH_MAXLEN];
 } FD_ALIGNED;
 
-struct fd_db_entry
+struct fd_db_file
 {
     int type;
     size_t size;
     char path[FD_DB_PATH_MAXLEN];
 } FD_ALIGNED;
 
+struct fd_db_all
+{
+    struct fd_db_header *header;
+    struct fd_db_config *config;
+    struct fd_db_dir *dirs;
+    struct fd_db_file *files;
+} FD_ALIGNED;
+
 extern uint8_t const FD_DB_MAGIC[FD_DB_MAGIC_SIZE];
 
 FD_EXPORT char const *fd_db_strerror(int code);
 
-FD_EXPORT int fd_db_open(void **, int);
+FD_EXPORT int fd_db_open(void **, int, char const *);
 
 FD_EXPORT int fd_db_close(void **);
 
-FD_EXPORT int fd_db_read(void **);
+FD_EXPORT int fd_db_read(void **, struct fd_db_all *);
 
-FD_EXPORT int fd_db_write(void **);
+FD_EXPORT int fd_db_write(void **, struct fd_db_all const *);
 
 FD_EXTERN_END
 

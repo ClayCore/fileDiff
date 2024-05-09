@@ -1,9 +1,9 @@
 /* ===========================================================================
     Information:
-        @(#)db/db_read.c   0.1.0 2024/05/07
-        lib/db/db_read.c   0.1.0 <claymore>
+        @(#)db/db_write.c   0.1.0 2024/05/09
+        lib/db/db_write.c   0.1.0 <claymore>
     Description:
-        database read operations
+        database write operations
    ========================================================================= */
 
 #include "db.h"
@@ -22,7 +22,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
-FD_INTERNAL int db$read_generic(void **stream, void *user, size_t size)
+FD_INTERNAL int db$write_generic(void **stream, void const *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;
 
@@ -44,39 +44,39 @@ FD_INTERNAL int db$read_generic(void **stream, void *user, size_t size)
         return retval;
     }
 
-    count = fread(buf, size, 1, *stream);
+    memcpy(buf, user, size);
+
+    count = fwrite(buf, size, 1, *stream);
     if (count != 1) {
-        retval = FD_DBERR_READ;
+        retval = FD_DBERR_WRITE;
         FD_LOG_ERROR("%s", fd_db_strerror(retval));
 
         return retval;
     }
-
-    memcpy(user, buf, size);
 
     free(buf);
 
     return retval;
 }
 
-FD_NO_EXPORT int db$read_header(void **stream, struct fd_db_header *data)
+FD_NO_EXPORT int db$write_header(void **stream, struct fd_db_header const *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$write_generic(stream, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_config(void **stream, struct fd_db_config *data)
+FD_NO_EXPORT int db$write_config(void **stream, struct fd_db_config const *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$write_generic(stream, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_dir(void **stream, struct fd_db_dir *data)
+FD_NO_EXPORT int db$write_dir(void **stream, struct fd_db_dir const *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$write_generic(stream, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_file(void **stream, struct fd_db_file *data)
+FD_NO_EXPORT int db$write_file(void **stream, struct fd_db_file const *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$write_generic(stream, data, sizeof *data);
 }
 
 #pragma clang diagnostic pop
