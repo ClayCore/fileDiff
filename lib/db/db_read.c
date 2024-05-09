@@ -22,16 +22,16 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
-FD_INTERNAL int db$read_generic(void **stream, void *user, size_t size)
+FD_INTERNAL int db$read_generic(void **handle, void *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;
 
     size_t count = 0;
     uint8_t *buf = NULL;
 
-    if (!(*stream)) {
+    if (!(*handle)) {
         retval = FD_DBERR_HANDLE;
-        FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(stream));
+        FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(handle));
 
         return retval;
     }
@@ -44,7 +44,7 @@ FD_INTERNAL int db$read_generic(void **stream, void *user, size_t size)
         return retval;
     }
 
-    count = fread(buf, size, 1, *stream);
+    count = fread(buf, size, 1, *handle);
     if (count != 1) {
         retval = FD_DBERR_READ;
         FD_LOG_ERROR("%s", fd_db_strerror(retval));
@@ -59,24 +59,24 @@ FD_INTERNAL int db$read_generic(void **stream, void *user, size_t size)
     return retval;
 }
 
-FD_NO_EXPORT int db$read_header(void **stream, struct fd_db_header *data)
+FD_NO_EXPORT int db$read_header(void **handle, struct fd_db_header *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$read_generic(handle, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_config(void **stream, struct fd_db_config *data)
+FD_NO_EXPORT int db$read_config(void **handle, struct fd_db_config *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$read_generic(handle, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_dir(void **stream, struct fd_db_dir *data)
+FD_NO_EXPORT int db$read_dir(void **handle, struct fd_db_dir *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$read_generic(handle, data, sizeof *data);
 }
 
-FD_NO_EXPORT int db$read_file(void **stream, struct fd_db_file *data)
+FD_NO_EXPORT int db$read_file(void **handle, struct fd_db_file *data)
 {
-    return db$read_generic(stream, data, sizeof *data);
+    return db$read_generic(handle, data, sizeof *data);
 }
 
 #pragma clang diagnostic pop
