@@ -33,8 +33,10 @@ dev_options_local()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 
-set(GIT_SHA "Unknown" CACHE STRING "SHA from this build")
-string(SUBSTRING "${GIT_SHA}" 0 8 GIT_SHORT_SHA)
+include(cmake/GetGitRevisionDescription.cmake)
+
+get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+string(SUBSTRING "${GIT_SHA1}" 0 8 GIT_SHORT_SHA)
 
 target_compile_features(dev_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
 target_compile_features(dev_options INTERFACE c_std_${CMAKE_C_STANDARD})

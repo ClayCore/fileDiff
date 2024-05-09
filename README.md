@@ -45,4 +45,5 @@ This project is under the GPL-3.0 license.
 ## Acknowledgements
 
  - [cmake_template.git](https://github.com/cpp-best-practices/cmake_template) for CMake build project template
+ - [GetGitRevisionDescription](https://github.com/rpavlik/cmake-modules/tree/main) for fetching git revision in CMake
  - [CHEAT](https://github.com/Tuplanolla/cheat/tree/master) for the C Unit testing framework
