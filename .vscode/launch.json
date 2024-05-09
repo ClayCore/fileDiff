@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "(lldb/CLI) launch",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/fileDiffCLI.exe",
+      "cwd": "${workspaceFolder}",
+      "args": []
+    },
+    {
+      "name": "(lldb/GUI) launch",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/fileDiffGUI.exe",
+      "cwd": "${workspaceFolder}",
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "files.associations": {
+    "*.h": "c"
+  },
+
+  // General settings
+  "editor.rulers": [],
+  "editor.guides.indentation": true,
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "on",
+    "strings": "on"
+  },
+  "editor.minimap.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.lineNumbers": "off",
+  "errorLens.enabled": false,
+  "editor.inlayHints.enabled": "off",
+
+  // cmake specific
+  "[cmake]": {
+    "editor.guides.indentation": true,
+    "editor.lineNumbers": "relative"
+  },
+  "cmake.configureOnOpen": false,
+  "cmake.configureOnEdit": false,
+
+  // clangd
+  "clangd.arguments": ["--background-index", "--compile-commands-dir=build"]
+}
