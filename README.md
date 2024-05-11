@@ -19,14 +19,15 @@ There are plans to add [Doxygen](https://www.doxygen.nl/index.html) but the proj
 ### Prerequisites
 
 #### Dependencies:
-GCC, Clang or MSVC/VS
-: For compiling
 
-CMake version >=3.21
-: for building the project
-
-Python >=3.11.5
-: optional, shorthand build scripts and tasks in `/.vscode/tasks.json`
+<dl>
+  <dt>GCC, clang or MSVC/VS</dt>
+  <dd>for compilation</dd>
+  <dt>CMake version >= 3.21</dt>
+  <dd>for building and testing all targets</dd>
+  <dt>Python >= 3.115</dt>
+  <dd>optional, utility scripts and tasks in `/.vscode/tasks.json`</dd>
+</dl>
 
 #### Platforms:
 Currently only Windows and Linux is supported.
