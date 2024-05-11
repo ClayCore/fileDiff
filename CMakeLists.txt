@@ -44,6 +44,9 @@ target_compile_features(dev_options INTERFACE c_std_${CMAKE_C_STANDARD})
 add_library(dev::dev_options ALIAS dev_options)
 add_library(dev::dev_warnings ALIAS dev_warnings)
 
+include(cmake/AddDir.cmake)
+dev_add_dir("${CMAKE_SOURCE_DIR}/target")
+
 add_subdirectory(config)
 
 set(BUILD_SHARED_LIBS ON)
