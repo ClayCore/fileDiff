@@ -1,16 +1,16 @@
 #!/bin/env python3
 
-import argparse
-import os
-import contextlib
-import sys
-import subprocess as sp
-from typing import List
 from dotenv import load_dotenv
 from pathlib import Path
+from typing import List
+import argparse
+import contextlib
+import os
+import subprocess as sp
+import sys
 
 PROJECT_ROOT_PATH = ''
-CMDLINE = ['cmake', ' '.join('--build', 'build', '--config', 'Debug')]
+CMDLINE = ['cmake', '--build', 'build', '--config', 'Debug']
 
 
 @contextlib.contextmanager

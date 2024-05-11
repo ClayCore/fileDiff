@@ -1,19 +1,19 @@
 #!/bin/env python3
 
-import argparse
-import os
-import contextlib
-import sys
-import subprocess as sp
-from typing import List
 from dotenv import load_dotenv
 from pathlib import Path
+from typing import List
+import argparse
+import contextlib
+import os
+import subprocess as sp
+import sys
 
 PROJECT_ROOT_PATH = ''
-CMDLINE = ['cmake', ' '.join('--build', 'build', '--config', 'Release')]
+CMDLINE = ['cmake', '--build', 'build', '--config', 'Release']
 
 
-@contextlib.contextmanager
+@ contextlib.contextmanager
 def pushd(new_dir: str):
     # pushd implementation
 

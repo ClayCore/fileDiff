@@ -1,11 +1,11 @@
 #!/bin/env python3
 
-import argparse
-import os
-import contextlib
-import shutil
 from dotenv import load_dotenv
 from pathlib import Path
+import argparse
+import contextlib
+import os
+import shutil
 
 PROJECT_ROOT_PATH = ''
 
