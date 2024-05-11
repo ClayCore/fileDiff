@@ -22,15 +22,141 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
-extern int db$read_header(void **, struct fd_db_header *);
-extern int db$read_config(void **, struct fd_db_config *);
-extern int db$read_dir(void **, struct fd_db_dir *);
-extern int db$read_file(void **, struct fd_db_file *);
+/* ---------------------------------------------------------------------------
+    Name:
+        db$read_header
+    Purpose:
+        read header structure from database file
+    Arguments:
+        | type           | name   | description                    |
+        | -------------- | ------ | ------------------------------ |
+        | void **        | handle | owned pointer to database file |
+        | fd_db_header * | data   | out param, read header data    |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$read_header(void **handle, struct fd_db_header *data);
 
-extern int db$write_header(void **, struct fd_db_header const *);
-extern int db$write_config(void **, struct fd_db_config const *);
-extern int db$write_dir(void **, struct fd_db_dir const *);
-extern int db$write_file(void **, struct fd_db_file const *);
+/* ---------------------------------------------------------------------------
+    Name:
+        db$read_config
+    Purpose:
+        read configuration from database file
+    Arguments:
+        | type           | name   | description                    |
+        | -------------- | ------ | ------------------------------ |
+        | void **        | handle | owned pointer to database file |
+        | fd_db_config * | data   | out param, read config data    |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$read_config(void **handle, struct fd_db_config *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$read_dir
+    Purpose:
+        read dir entry from database file
+    Arguments:
+        | type        | name   | description                     |
+        | ----------- | ------ | ------------------------------- |
+        | void **     | handle | owned pointer to database file  |
+        | fd_db_dir * | data   | out param, read directory entry |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$read_dir(void **handle, struct fd_db_dir *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$read_file
+    Purpose:
+        read file entry from database file
+    Arguments:
+        | type         | name   | description                    |
+        | ------------ | ------ | ------------------------------ |
+        | void **      | handle | owned pointer to database file |
+        | fd_db_file * | data   | out param, read file entry     |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$read_file(void **handle, struct fd_db_file *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$write_header
+    Purpose:
+        write header structure to database
+    Arguments:
+        | type           | name   | description                    |
+        | -------------- | ------ | ------------------------------ |
+        | void **        | handle | owned pointer to database file |
+        | fd_db_header * | data   | in param, header to write      |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$write_header(void **handle, struct fd_db_header const *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$write_config
+    Purpose:
+        write configuration to database
+    Arguments:
+        | type           | name   | description                    |
+        | -------------- | ------ | ------------------------------ |
+        | void **        | handle | owned pointer to database file |
+        | fd_db_config * | data   | in param, config to write      |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$write_config(void **handle, struct fd_db_config const *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$write_dir
+    Purpose:
+        write directory entry to database
+    Arguments:
+        | type        | name   | description                        |
+        | ----------- | ------ | ---------------------------------- |
+        | void **     | handle | owned pointer to database file     |
+        | fd_db_dir * | data   | in param, directory entry to write |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$write_dir(void **handle, struct fd_db_dir const *data);
+
+/* ---------------------------------------------------------------------------
+    Name:
+        db$write_file
+    Purpose:
+        write file entry to database
+    Arguments:
+        | type         | name   | description                    |
+        | ------------ | ------ | ------------------------------ |
+        | void **      | handle | owned pointer to database file |
+        | fd_db_file * | data   | in param, file entry to write  |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
+extern int db$write_file(void **handle, struct fd_db_file const *data);
 
 #pragma clang diagnostic pop
 

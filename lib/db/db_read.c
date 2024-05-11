@@ -22,6 +22,22 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
+/* ---------------------------------------------------------------------------
+    Name:
+        db$read_generic
+    Purpose:
+        reads a byte array from the database file
+    Arguments:
+        | type    | name   | description                     |
+        | ------- | ------ | ------------------------------- |
+        | void ** | handle | owned pointer to database file  |
+        | void *  | user   | out param, bytes that were read |
+        | size_t  | size   | how many bytes to read          |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
 FD_INTERNAL int db$read_generic(void **handle, void *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;

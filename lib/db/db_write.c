@@ -22,6 +22,22 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
 
+/* ---------------------------------------------------------------------------
+    Name:
+        db$write_generic
+    Purpose:
+        writes a byte array to the database file
+    Arguments:
+        | type         | name   | description                    |
+        | ------------ | ------ | ------------------------------ |
+        | void **      | handle | owned pointer to database file |
+        | void const * | user   | in param, byte array to write  |
+        | size_t       | size   | how many bytes to write        |
+    Return value:
+        | type | description                |
+        | ---- | -------------------------- |
+        | int  | one of FD_DB_ERRORS values |
+   ------------------------------------------------------------------------- */
 FD_INTERNAL int db$write_generic(void **handle, void const *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;
