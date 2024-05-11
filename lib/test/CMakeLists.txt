@@ -21,7 +21,8 @@ if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
 endif()
 
 set(test_names "")
-list(APPEND test_names "test_db")
+list(APPEND test_names "test_db_write")
+list(APPEND test_names "test_db_read")
 
 list(LENGTH test_names test_names_count)
 math(EXPR test_names_count "${test_names_count} - 1")
@@ -31,11 +32,6 @@ foreach(test RANGE ${test_names_count})
 
   add_executable(${test_name} ${test_name}.c)
 
-  target_include_directories(
-    ${test_name}
-    PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/vendor/cheat>
-  )
   target_link_libraries(
     ${test_name}
     PUBLIC
