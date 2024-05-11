@@ -10,7 +10,7 @@ import sys
 
 CMDLINE = ['cmake', '-S', '.', '-B', 'build', '-G', 'Ninja',
            '-Ddev_WARNINGS_AS_ERRORS=OFF', '-DCMAKE_BUILD_TYPE=Release']
-FILES = ['README.md', '.env.local', '.gitignore', 'CMakeLists.txt']
+FILES = ['README.md', '.gitignore', 'CMakeLists.txt']
 PROJECT_ROOT_PATH = None
 
 
@@ -18,21 +18,37 @@ def check_for_root() -> Path:
     cwd: str = os.getcwd()
 
     results: Dict[int, bool] = {}
-    for parent in range(1, 3):
-        root_cand: Path = Path(cwd).parents[parent].resolve()
-        print(f'selected path: {root_cand}')
+    count = 0
+    for file in FILES:
+        tmp: Path = Path(cwd).resolve() / file
+        if not tmp.exists():
+            continue
+        else:
+            count += 1
 
-        for file in FILES:
-            tmp: Path = root_cand / file
-            if not tmp.exists():
-                continue
-            else:
+    if count == len(FILES):
+        return Path(cwd).resolve()
+    else:
+        for parent in range(-2, 3):
+            root_cand: Path = Path(cwd).parents[parent].resolve()
+            print(f'selected path: {root_cand}')
+            print(f'index: {parent}')
+
+            count = 0
+            for file in FILES:
+                tmp: Path = root_cand / file
+                if not tmp.exists():
+                    continue
+                else:
+                    count += 1
+
+            if count == len(FILES):
                 results[parent] = True
 
-    for parent_index, is_root in results.items():
-        if is_root == True:
-            root_path = Path(cwd).parents[parent_index].resolve()
-            return root_path
+        for parent_index, is_root in results.items():
+            if is_root == True:
+                root_path = Path(cwd).parents[parent_index].resolve()
+                return root_path
 
     return None
 
@@ -83,6 +99,10 @@ def main():
         if process.stderr and not (process.stdout == process.stderr):
             stderr = process.stderr.decode('utf-8')
             print(f' - stderr:\n{stderr}', file=sys.stderr)
+    else:
+        if process.stdout:
+            stdout = process.stdout.decode('utf-8')
+            print(f' - stdout:\n{stdout}', file=sys.stderr)
 
 
 if __name__ == '__main__':
