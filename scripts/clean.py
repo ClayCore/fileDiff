@@ -1,13 +1,37 @@
 #!/bin/env python3
 
-from dotenv import load_dotenv
+from typing import Dict
 from pathlib import Path
 import argparse
 import contextlib
 import os
 import shutil
 
-PROJECT_ROOT_PATH = ''
+FILES = ['README.md', '.env.local', '.gitignore', 'CMakeLists.txt']
+PROJECT_ROOT_PATH = None
+
+
+def check_for_root() -> Path:
+    cwd: str = os.getcwd()
+
+    results: Dict[int, bool] = {}
+    for parent in range(1, 3):
+        root_cand: Path = Path(cwd).parents[parent].resolve()
+        print(f'selected path: {root_cand}')
+
+        for file in FILES:
+            tmp: Path = root_cand / file
+            if not tmp.exists():
+                continue
+            else:
+                results[parent] = True
+
+    for parent_index, is_root in results.items():
+        if is_root == True:
+            root_path = Path(cwd).parents[parent_index].resolve()
+            return root_path
+
+    return None
 
 
 @contextlib.contextmanager
@@ -40,12 +64,8 @@ def main():
         resolved_root = Path(args.root).resolve()
         PROJECT_ROOT_PATH = resolved_root
     else:
-        # fallback to .env.local file
-        cwd = os.getcwd()
-        load_dotenv(dotenv_path=f'{cwd}/.env.local')
-
-        resolved_root = Path(os.environ['PROJECT_ROOT']).resolve()
-        PROJECT_ROOT_PATH = resolved_root
+        # fallback to finding root path ourselves
+        PROJECT_ROOT_PATH = str(check_for_root())
 
     with pushd(PROJECT_ROOT_PATH):
         clean_dir()

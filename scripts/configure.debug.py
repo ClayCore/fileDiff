@@ -1,17 +1,40 @@
 #!/bin/env python3
 
-from dotenv import load_dotenv
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 import argparse
 import contextlib
 import os
 import subprocess as sp
 import sys
 
-PROJECT_ROOT_PATH = ''
 CMDLINE = ['cmake', '-S', '.', '-B', 'build', '-G', 'Ninja',
            '-Ddev_WARNINGS_AS_ERRORS=OFF', '-DCMAKE_BUILD_TYPE=Debug']
+FILES = ['README.md', '.env.local', '.gitignore', 'CMakeLists.txt']
+PROJECT_ROOT_PATH = None
+
+
+def check_for_root() -> Path:
+    cwd: str = os.getcwd()
+
+    results: Dict[int, bool] = {}
+    for parent in range(1, 3):
+        root_cand: Path = Path(cwd).parents[parent].resolve()
+        print(f'selected path: {root_cand}')
+
+        for file in FILES:
+            tmp: Path = root_cand / file
+            if not tmp.exists():
+                continue
+            else:
+                results[parent] = True
+
+    for parent_index, is_root in results.items():
+        if is_root == True:
+            root_path = Path(cwd).parents[parent_index].resolve()
+            return root_path
+
+    return None
 
 
 @contextlib.contextmanager
@@ -42,12 +65,8 @@ def main():
         resolved_root = Path(args.root).resolve()
         PROJECT_ROOT_PATH = resolved_root
     else:
-        # fallback to .env.local file
-        cwd = os.getcwd()
-        load_dotenv(dotenv_path=f'{cwd}/.env.local')
-
-        resolved_root = Path(os.environ['PROJECT_ROOT']).resolve()
-        PROJECT_ROOT_PATH = resolved_root
+        # fallback to finding root path ourselves
+        PROJECT_ROOT_PATH = str(check_for_root())
 
     process: sp.CompletedProcess[str] = None
     with pushd(PROJECT_ROOT_PATH):
