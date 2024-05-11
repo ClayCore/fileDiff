@@ -75,3 +75,11 @@ add_custom_command(
   COMMAND
   ${CMAKE_COMMAND} -E copy $<TARGET_FILE:libFileDiff> ${PROJECT_SOURCE_DIR}/target
 )
+
+add_custom_command(
+  TARGET
+  libFileDiff
+  POST_BUILD
+  COMMAND
+  ${CMAKE_COMMAND} -E copy $<TARGET_FILE:libFileDiff> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib/test/>
+)
