@@ -41,11 +41,12 @@
 FD_INTERNAL int db$write_generic(void **handle, void const *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;
+    FILE *fp   = (FILE *)(&handle);
 
     size_t count = 0;
     uint8_t *buf = NULL;
 
-    if (!(*handle)) {
+    if (!fp) {
         retval = FD_DBERR_HANDLE;
         FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(handle));
 
@@ -62,7 +63,7 @@ FD_INTERNAL int db$write_generic(void **handle, void const *user, size_t size)
 
     memcpy(buf, user, size);
 
-    count = fwrite(buf, size, 1, *handle);
+    count = fwrite(buf, size, 1, fp);
     if (count != 1) {
         retval = FD_DBERR_WRITE;
         FD_LOG_ERROR("%s", fd_db_strerror(retval));
@@ -71,6 +72,7 @@ FD_INTERNAL int db$write_generic(void **handle, void const *user, size_t size)
     }
 
     free(buf);
+
 
     return retval;
 }

@@ -185,15 +185,17 @@ char const *fd_db_strerror(int code)
 
 int fd_db_open(void **handle, int mode, char const *path)
 {
+    FILE *fp        = (FILE *)(&handle);
     int retval      = FD_DBERR_SUCCESS;
     errno_t errcode = 0;
 
+
     switch (mode) {
     case FD_DBOM_READ: {
-        errcode = fopen_s(*handle, path, "rb+");
+        errcode = fopen_s(&fp, path, "rb+");
     } break;
     case FD_DBOM_WRITE: {
-        errcode = fopen_s(*handle, path, "wb+");
+        errcode = fopen_s(&fp, path, "wb+");
     } break;
     default: {
         retval = FD_DBERR_MINVALID;
@@ -207,6 +209,7 @@ int fd_db_open(void **handle, int mode, char const *path)
         FD_LOG_ERROR("%s: \'%s\'", fd_db_strerror(retval), path);
         return retval;
     }
+
 
     return retval;
 }
@@ -223,6 +226,7 @@ int fd_db_close(void **handle)
     }
 
     fclose(*handle);
+
 
     return retval;
 }
@@ -339,6 +343,7 @@ int fd_db_read(void **handle, struct fd_db_all *data_ptr)
     free(dirs);
     free(files);
 
+
     return retval;
 }
 
@@ -407,14 +412,14 @@ int fd_db_write(void **handle, struct fd_db_all const *data)
         return retval;
 
     // Write directory entries
-    for (; dirs != dirs_end; ++dirs) {
-        if ((retval = db$write_dir(handle, dirs)) != FD_DBERR_SUCCESS)
+    for (; dirs != dirs_end;) {
+        if ((retval = db$write_dir(handle, dirs++)) != FD_DBERR_SUCCESS)
             return retval;
     }
 
     // Write file entries
-    for (; files != files_end; ++files) {
-        if ((retval = db$write_file(handle, files)) != FD_DBERR_SUCCESS)
+    for (; files != files_end;) {
+        if ((retval = db$write_file(handle, files++)) != FD_DBERR_SUCCESS)
             return retval;
     }
 
