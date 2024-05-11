@@ -4,7 +4,7 @@
     {
       "label": "(release) build",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/build.release.cmd",
+      "command": "python ${workspaceFolder}/scripts/build.release.py",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -21,7 +21,7 @@
     {
       "label": "(debug) build",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/build.debug.cmd",
+      "command": "python ${workspaceFolder}/scripts/build.debug.py",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -38,7 +38,7 @@
     {
       "label": "(release) configure",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/configure.release.cmd",
+      "command": "python ${workspaceFolder}/scripts/configure.release.py",
       "group": {
         "kind": "build",
         "isDefault": false
@@ -55,7 +55,7 @@
     {
       "label": "(debug) configure",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/configure.debug.cmd",
+      "command": "python ${workspaceFolder}/scripts/configure.debug.py",
       "group": {
         "kind": "build",
         "isDefault": false
@@ -72,7 +72,7 @@
     {
       "label": "clean",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/clean.cmd",
+      "command": "python ${workspaceFolder}/scripts/clean.py",
       "group": {
         "kind": "build",
         "isDefault": false
