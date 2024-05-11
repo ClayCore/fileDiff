@@ -11,7 +11,7 @@ int main(void)
 
     fprintf(stderr, "!!!!! test_db_read !!!!!\n");
 
-    errcode = fd_db_open((void **)(&f), FD_DBOM_READ, "hidden_db.dat");
+    errcode = fd_db_open((void **)(&f), FD_DBOM_READ, "hidden$db.dat");
     if (errcode != FD_DBERR_SUCCESS) {
         fprintf(stderr, "open failed\n");
         return 1;

@@ -43,7 +43,7 @@ int main(void)
     db->dirs   = dirs;
     db->files  = files;
 
-    errcode = fd_db_open((void **)(&f), FD_DBOM_WRITE, "hidden_db.dat");
+    errcode = fd_db_open((void **)(&f), FD_DBOM_WRITE, "hidden$db.dat");
     if (errcode != FD_DBERR_SUCCESS) {
         fprintf(stderr, "open failed\n");
         return 1;

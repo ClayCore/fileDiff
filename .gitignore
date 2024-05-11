@@ -3,6 +3,10 @@
 
 /private_data/*
 
+/lib/test/*$*.*
+/bin/fileDiffCLI/test/*$*.*
+/bin/fileDiffGUI/test/*$*.*
+
 CMakeUserPresets.json
 
 .vs/
