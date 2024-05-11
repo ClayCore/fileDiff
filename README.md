@@ -1,9 +1,8 @@
 # FileDiff
 
-## About
-
 [![Lines of Code](https://tokei.rs/b1/github/ClayCore/fileDiff?category=code)](https://github.com/ClayCore/fileDiff)
 
+## About
 CLI and GUI drive file diff utility.
 
 ## Screenshots
@@ -19,6 +18,19 @@ There are plans to add [Doxygen](https://www.doxygen.nl/index.html) but the proj
 
 ### Prerequisites
 
+#### Dependencies:
+GCC, Clang or MSVC/VS
+: For compiling
+
+CMake version >=3.21
+: for building the project
+
+Python >=3.11.5
+: optional, shorthand build scripts and tasks in `/.vscode/tasks.json`
+
+#### Platforms:
+Currently only Windows and Linux is supported.
+
 #### Build:
 GCC, Clang and MSVC are *technically* supported, however the project's only been tested with GCC and Clang.
 
@@ -29,14 +41,17 @@ $ cmake --build build
 ```
 This will build the project using default settings and it will assume/detect many options. You can customize it to your liking. Check out the various modules in `/cmake/` folder for more.
 
-You can also use the batch scripts present in the `/scripts/` directory.
- - [configure.debug.cmd](/scripts/configure.debug.cmd): Configure the project using the `Debug` configuration,
- - [configure.release.cmd](/scripts/configure.release.cmd): Configure the project using the `Release` configuration,
- - [build.debug.cmd](/scripts/build.debug.cmd): Builds the project using the `Debug` configuration,
- - [build.release.cmd](/scripts/build.release.cmd): Builds the project using the `Release` configuration,
+You can also use the following python scripts present in the `/scripts/` directory.
+ - [configure.debug.py](/scripts/configure.debug.py): Configure the project using the `Debug` configuration,
+ - [configure.release.py](/scripts/configure.release.py): Configure the project using the `Release` configuration,
+ - [build.debug.py](/scripts/build.debug.py): Builds the project using the `Debug` configuration,
+ - [build.release.py](/scripts/build.release.py): Builds the project using the `Release` configuration,
 
-#### Platforms:
-Currently only Windows and Linux is supported.
+#### Testing:
+For unit tests `CTest` is used. Simply run the following to run all tests:
+```sh
+$ ctest --test-dir build
+```
 
 ## License
 
