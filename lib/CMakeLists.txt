@@ -3,6 +3,7 @@ include(GenerateExportHeader)
 add_library(
   libFileDiff
   logging/log.c
+  hash/hash_file.c
   db/db.c
   db/db_write.c
   db/db_read.c
