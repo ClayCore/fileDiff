@@ -1,2 +1,2 @@
 @echo off
-python cmake_alias/main.py -T -B gui
+python scripts/cmake_alias/main.py -T -B gui

@@ -1,2 +1,2 @@
 @echo off
-python cmake_alias/main.py --config debug --action build
+python scripts/cmake_alias/main.py --config debug --action build

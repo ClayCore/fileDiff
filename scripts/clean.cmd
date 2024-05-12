@@ -1,2 +1,2 @@
 @echo off
-python cmake_alias/main.py -C
+python scripts/cmake_alias/main.py -C
