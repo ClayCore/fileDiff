@@ -4,7 +4,7 @@
     {
       "label": "(release) build",
       "type": "shell",
-      "command": "python ${workspaceFolder}/scripts/build.release.py",
+      "command": "${workspaceFolder}/scripts/build.release.cmd",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -21,7 +21,7 @@
     {
       "label": "(debug) build",
       "type": "shell",
-      "command": "python ${workspaceFolder}/scripts/build.debug.py",
+      "command": "${workspaceFolder}/scripts/build.debug.cmd",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -38,7 +38,7 @@
     {
       "label": "(release) configure",
       "type": "shell",
-      "command": "python ${workspaceFolder}/scripts/configure.release.py",
+      "command": "${workspaceFolder}/scripts/configure.release.cmd",
       "group": {
         "kind": "build",
         "isDefault": false
@@ -55,7 +55,7 @@
     {
       "label": "(debug) configure",
       "type": "shell",
-      "command": "python ${workspaceFolder}/scripts/configure.debug.py",
+      "command": "${workspaceFolder}/scripts/configure.debug.cmd",
       "group": {
         "kind": "build",
         "isDefault": false
@@ -72,7 +72,7 @@
     {
       "label": "(test/lib) run CTest",
       "type": "shell",
-      "command": "ctest --test-dir ${workspaceFolder}/build/lib",
+      "command": "${workspaceFolder}/scripts/test.lib.cmd",
       "group": {
         "kind": "test",
         "isDefault": false
@@ -89,7 +89,7 @@
     {
       "label": "(test/cli) run CTest",
       "type": "shell",
-      "command": "ctest --test-dir ${workspaceFolder}/build/bin/fileDiffCLI",
+      "command": "${workspaceFolder}/scripts/test.cli.cmd",
       "group": {
         "kind": "test",
         "isDefault": false
@@ -106,7 +106,7 @@
     {
       "label": "(test/gui) run CTest",
       "type": "shell",
-      "command": "ctest --test-dir ${workspaceFolder}/build/bin/fileDiffGUI",
+      "command": "${workspaceFolder}/scripts/test.gui.cmd",
       "group": {
         "kind": "test",
         "isDefault": false
@@ -123,7 +123,7 @@
     {
       "label": "clean",
       "type": "shell",
-      "command": "python ${workspaceFolder}/scripts/clean.py",
+      "command": "${workspaceFolder}/scripts/clean.cmd",
       "group": {
         "kind": "build",
         "isDefault": false
