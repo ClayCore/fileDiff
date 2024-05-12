@@ -129,8 +129,8 @@ def run_cmake_cmd(cmdline: List[str]) -> sp.CompletedProcess[str]:
     return process
 
 
-def clean_dirs(path: Path):
-    build_dir = path / 'build'
+def clean_dirs(path: Path, build: str):
+    build_dir = path / build
     target_dir = path / 'target'
 
     shutil.rmtree(build_dir)
@@ -157,10 +157,17 @@ def main():
     else:
         root_path = check_for_root()
 
+    # substitute variables from dotenv
+    load_dotenv(dotenv_path=f'{root_path}/.env')
+
+    build_dir = os.environ('BUILDDIR')
+    generator = os.environ('GENERATOR')
+
     if args.clean and not args.test:
-        clean_dirs(root_path)
+        clean_dirs(root_path, build_dir)
         return ()
 
+    # fetch cmake/ctest params using launch params
     cmake_params = ''
     cmake_cmdline = []
     if not args.test:
@@ -169,12 +176,6 @@ def main():
     else:
         cmake_params = f'test:{args.binary}'
         cmake_cmdline = CMAKE_ARGS[cmake_params]
-
-    # substitute variables from dotenv
-    load_dotenv(dotenv_path=f'{root_path}/.env')
-
-    build_dir = os.environ('BUILDDIR')
-    generator = os.environ('GENERATOR')
 
     cmake_cmdline = [c.replace('$BUILDDIR$', build_dir) for c in cmake_cmdline]
     cmake_cmdline = [c.replace('$GENERATOR$', generator)

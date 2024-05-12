@@ -42,17 +42,23 @@ $ cmake --build build
 ```
 This will build the project using default settings and it will assume/detect many options. You can customize it to your liking. Check out the various modules in `/cmake/` folder for more.
 
-You can also use the following python scripts present in the `/scripts/` directory.
- - [configure.debug.py](/scripts/configure.debug.py): Configure the project using the `Debug` configuration,
- - [configure.release.py](/scripts/configure.release.py): Configure the project using the `Release` configuration,
- - [build.debug.py](/scripts/build.debug.py): Builds the project using the `Debug` configuration,
- - [build.release.py](/scripts/build.release.py): Builds the project using the `Release` configuration,
+You can also use the following batch scripts present in the `/scripts/` directory.
+Note that these call into a python script, that in turn configures/builds the project with the `Ninja` generator
+ - [configure.debug.cmd](/scripts/configure.debug.cmd): Configure the project using the `Debug` configuration,
+ - [configure.release.cmd](/scripts/configure.release.cmd): Configure the project using the `Release` configuration,
+ - [build.debug.cmd](/scripts/build.debug.cmd): Builds the project using the `Debug` configuration,
+ - [build.release.cmd](/scripts/build.release.cmd): Builds the project using the `Release` configuration,
 
 #### Testing:
 For unit tests `CTest` is used. Simply run the following to run all tests:
 ```sh
 $ ctest --test-dir build
 ```
+
+You can also use the batch scripts below
+ - [test.cli.cmd]('/scripts/test.cli.cmd'): Runs `CTest` against the CLI testing suite,
+ - [test.gui.cmd]('/scripts/test.gui.cmd'): Runs `CTest` against the GUI testing suite,
+ - [test.lib.cmd]('/scripts/test.lib.cmd'): Runs `CTest` against the common library,
 
 ## License
 
