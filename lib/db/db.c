@@ -185,17 +185,16 @@ char const *fd_db_strerror(int code)
 
 int fd_db_open(void **handle, int mode, char const *path)
 {
-    FILE *fp        = (FILE *)(&handle);
-    int retval      = FD_DBERR_SUCCESS;
-    errno_t errcode = 0;
+    FILE *fp   = *handle;
+    int retval = FD_DBERR_SUCCESS;
 
 
     switch (mode) {
     case FD_DBOM_READ: {
-        errcode = fopen_s(&fp, path, "rb+");
+        fp = fopen(path, "r+b");
     } break;
     case FD_DBOM_WRITE: {
-        errcode = fopen_s(&fp, path, "wb+");
+        fp = fopen(path, "w+b");
     } break;
     default: {
         retval = FD_DBERR_MINVALID;
@@ -204,12 +203,13 @@ int fd_db_open(void **handle, int mode, char const *path)
     } break;
     }
 
-    if (errcode != 0) {
+    if (errno != 0) {
         retval = FD_DBERR_NOFILE;
         FD_LOG_ERROR("%s: \'%s\'", fd_db_strerror(retval), path);
         return retval;
     }
 
+    *handle = fp;
 
     return retval;
 }
@@ -217,15 +217,16 @@ int fd_db_open(void **handle, int mode, char const *path)
 int fd_db_close(void **handle)
 {
     int retval = FD_DBERR_SUCCESS;
+    FILE *fp   = *handle;
 
-    if (!(*handle)) {
+    if (!fp) {
         retval = FD_DBERR_HANDLE;
         FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(handle));
 
         return retval;
     }
 
-    fclose(*handle);
+    fclose(fp);
 
 
     return retval;
@@ -319,19 +320,19 @@ int fd_db_read(void **handle, struct fd_db_all *data_ptr)
         return FD_DBERR_ALLOC;
     }
 
-    FD_LOG_TRACE("copying header");
+    FD_LOG_TRACE("reading header");
     data->header = malloc(sizeof *header);
     memcpy(data->header, header, sizeof *header);
 
-    FD_LOG_TRACE("copying config");
+    FD_LOG_TRACE("reading config");
     data->config = malloc(sizeof *config);
     memcpy(data->config, config, sizeof *config);
 
-    FD_LOG_TRACE("copying directories");
+    FD_LOG_TRACE("reading directory entries");
     data->dirs = calloc(header->dirs_count, sizeof *dirs);
     memcpy(data->dirs, dirs, sizeof *dirs * header->dirs_count);
 
-    FD_LOG_TRACE("copying files");
+    FD_LOG_TRACE("reading file entries");
     data->files = calloc(header->files_count, sizeof *files);
     memcpy(data->files, files, sizeof *files * header->files_count);
 
@@ -404,20 +405,24 @@ int fd_db_write(void **handle, struct fd_db_all const *data)
     files_end = files + header->files_count;
 
     // Write header
+    FD_LOG_TRACE("writing header");
     if ((retval = db$write_header(handle, header)) != FD_DBERR_SUCCESS)
         return retval;
 
     // Write config
+    FD_LOG_TRACE("writing config");
     if ((retval = db$write_config(handle, config)) != FD_DBERR_SUCCESS)
         return retval;
 
     // Write directory entries
+    FD_LOG_TRACE("writing directory entries");
     for (; dirs != dirs_end;) {
         if ((retval = db$write_dir(handle, dirs++)) != FD_DBERR_SUCCESS)
             return retval;
     }
 
     // Write file entries
+    FD_LOG_TRACE("writing file entries");
     for (; files != files_end;) {
         if ((retval = db$write_file(handle, files++)) != FD_DBERR_SUCCESS)
             return retval;

@@ -11,6 +11,8 @@
 
 #include "utils/defs.h"
 
+#include <stdio.h>
+
 /* Length of magic string embedded in the header of the database */
 #define FD_DB_MAGIC_SIZE (8)
 

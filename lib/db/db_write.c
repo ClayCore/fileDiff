@@ -41,14 +41,15 @@
 FD_INTERNAL int db$write_generic(void **handle, void const *user, size_t size)
 {
     int retval = FD_DBERR_SUCCESS;
-    FILE *fp   = (FILE *)(&handle);
+    FILE *fp   = *handle;
 
     size_t count = 0;
     uint8_t *buf = NULL;
 
-    if (!fp) {
+
+    if (fp == NULL) {
         retval = FD_DBERR_HANDLE;
-        FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(handle));
+        FD_LOG_ERROR("%s: %p", fd_db_strerror(retval), (void *)(fp));
 
         return retval;
     }
