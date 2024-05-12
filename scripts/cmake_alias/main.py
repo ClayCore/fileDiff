@@ -89,6 +89,7 @@ def check_for_root() -> Path:
     cwd: str = os.getcwd()
 
     # check cwd before going up/down dirs
+    count = 0
     results: Dict[int, bool] = {}
     for file in ROOT_FILES:
         tmp: Path = Path(cwd).resolve() / file
@@ -146,10 +147,10 @@ def main():
     parser.add_argument('--config', type=str, help='debug or release')
     parser.add_argument('--action', type=str, help='build or configure')
     parser.add_argument(
-        '-T', '--test', action='store_false', help='run tests?')
+        '-T', '--test', action='store_true', help='run tests?')
     parser.add_argument('-B', '--binary', type=str, help='test binary to run')
     parser.add_argument(
-        '-C', '--clean', action='store_false', help='clean build?')
+        '-C', '--clean', action='store_true', help='clean build?')
     args = parser.parse_args()
 
     if args.root:
@@ -160,8 +161,8 @@ def main():
     # substitute variables from dotenv
     load_dotenv(dotenv_path=f'{root_path}/.env')
 
-    build_dir = os.environ('BUILDDIR')
-    generator = os.environ('GENERATOR')
+    build_dir = os.environ['BUILDDIR']
+    generator = os.environ['GENERATOR']
 
     if args.clean and not args.test:
         clean_dirs(root_path, build_dir)
@@ -170,6 +171,7 @@ def main():
     # fetch cmake/ctest params using launch params
     cmake_params = ''
     cmake_cmdline = []
+
     if not args.test:
         cmake_params = f'{args.action}:{args.config}'
         cmake_cmdline = CMAKE_ARGS[cmake_params]
