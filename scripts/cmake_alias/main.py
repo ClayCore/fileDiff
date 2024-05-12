@@ -46,14 +46,15 @@ CMAKE_ARGS = {
     ],
     'configure:debug': [
         'cmake',
-        '-S', '.'
+        '-S', '.',
         '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
-        '-DCMAKE_BUILD_TYPE=Debug'
+        '-DCMAKE_BUILD_TYPE=Debug',
+        '-Ddev_WARNINGS_AS_ERRORS=OFF'
     ],
     'configure:release': [
         'cmake',
-        '-S', '.'
+        '-S', '.',
         '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
         '-DCMAKE_BUILD_TYPE=Release'
