@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)platform/win32.h   0.1.0 2024/04/28
-        lib/platform/win32.h   0.1.0 <claymore>
+        lib/platform/win32.h   0.1.0 2024/04/28 <claymore>
     Description:
         thin wrapper around win32 specific io operations
    ========================================================================= */

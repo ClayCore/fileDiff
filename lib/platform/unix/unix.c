@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)platform/unix.c   0.1.0 2024/04/28
-        lib/platform/unix.c   0.1.0 <claymore>
+        lib/platform/unix.c   0.1.0 2024/04/28 <claymore>
     Description:
         thin wrapper around unix specific io operations
    ========================================================================= */
@@ -10,6 +9,7 @@
 
     #include "unix.h"
     #include "logging/log.h"
+    #include "utils/defs.h"
 
 
     #include <sys/stat.h>
@@ -22,7 +22,7 @@
 
     #define FD_UNIX_MAXPATH (1024)
 
-FD_EXPORT struct fdlib_file_info fdlib_unix_stat_file(char const *path)
+FD_EXPORT struct fd_file_info fd_unix_stat_file(char const *path)
 {
     struct fdlib_file_info fi      = { 0 };
     struct stat filestat           = { 0 };

@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)db/db.h   0.1.0 2024/05/04
-        lib/db/db.h   0.1.0 <claymore>
+        lib/db/db.h   0.1.0 2024/05/04 <claymore>
     Description:
         database index for fetched files and paths
    ========================================================================= */
@@ -10,8 +9,6 @@
 #pragma once
 
 #include "utils/defs.h"
-
-#include <stdio.h>
 
 /* Length of magic string embedded in the header of the database */
 #define FD_DB_MAGIC_SIZE (8)

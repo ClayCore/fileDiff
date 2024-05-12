@@ -1,9 +1,8 @@
 /* ===========================================================================
     Information:
-        @(#)platform/win32.h   0.1.0 2024/04/28
-        lib/platform/win32.h   0.1.0 <claymore>
+        lib/platform/unix.h   0.1.0 2024/04/28 <claymore>
     Description:
-        thin wrapper around win32 specific io operations
+        thin wrapper around unix specific io operations
    ========================================================================= */
 
 #ifndef FD_PLATFORM_UNIX
@@ -17,15 +16,15 @@ FD_EXTERN_BEGIN
 
 /* ---------------------------------------------------------------------------
     Name:
-        fdlib_unix_stat_file
+        fd_unix_stat_file
     Purpose:
-        populates the 'fdlib_file_info' structure
+        populates the 'fd_file_info' structure
     Arguments:
         | type         | name        | description |
         | ------------ | ----------- | ----------- |
         | char const * | path        | filename    |
    ------------------------------------------------------------------------- */
-FD_EXPORT struct fdlib_file_info fdlib_unix_stat_file(char const *path);
+FD_EXPORT struct fd_file_info fd_unix_stat_file(char const *path);
 
 FD_EXTERN_END
 

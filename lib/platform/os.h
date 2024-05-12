@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)platform/os.h   0.1.0 2024/04/28
-        lib/platform/os.h   0.1.0 <claymore>
+        lib/platform/os.h   0.1.0 2024/04/28 <claymore>
     Description:
         includes specific headers based on platform
    ========================================================================= */

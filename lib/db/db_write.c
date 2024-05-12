@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)db/db_write.c   0.1.0 2024/05/09
-        lib/db/db_write.c   0.1.0 <claymore>
+        lib/db/db_write.c   0.1.0 2024/05/09 <claymore>
     Description:
         database write operations
    ========================================================================= */

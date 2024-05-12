@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)db/db.c   0.1.0 2024/05/04
-        lib/db/db.c   0.1.0 <claymore>
+        lib/db/db.c   0.1.0 2024/05/04 <claymore>
     Description:
         database index for fetched files and paths
    ========================================================================= */

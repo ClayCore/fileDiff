@@ -1,7 +1,6 @@
 /* ===========================================================================
     Information:
-        @(#)platform/win32/file.h   0.1.0 2024/04/28
-        lib/platform/win32/file.h   0.1.0 <claymore>
+        lib/platform/win32/file.h   0.1.0 2024/04/28 <claymore>
     Description:
         win32 file operations and processing
    ========================================================================= */
