@@ -50,7 +50,7 @@ enum FD_WIN32_PATH_TYPE
 
 /* ---------------------------------------------------------------------------
     Name:
-        fdlib_win32_normalize_path
+        fd_win32_normalize_path
     Purpose:
         normalizes the unnormalized path provided
         the path is a valid windows path
@@ -63,7 +63,7 @@ enum FD_WIN32_PATH_TYPE
         | ------ | ------------------------ |
         | char * | normalized path          |
    ------------------------------------------------------------------------- */
-FD_EXPORT char *fdlib_win32_normalize_path(char *path);
+FD_EXPORT char *fd_win32_normalize_path(char *path);
 
 FD_EXTERN_END
 

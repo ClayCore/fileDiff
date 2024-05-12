@@ -17,19 +17,19 @@ FD_EXTERN_BEGIN
 
 /* ---------------------------------------------------------------------------
     Name:
-        fdlib_win32_stat_file
+        fd_win32_stat_file
     Purpose:
-        populates the 'fdlib_file_info' structure
+        populates the 'fd_file_info' structure
     Arguments:
-        | type          | name | description       |
-        | ------------- | ---- | ----------------- |
-        | char const *  | path | path to the file  |
+        | type         | name | description       |
+        | ------------ | ---- | ----------------- |
+        | char const * | path | path to the file  |
     Return value:
-        | type          | description              |
-        | ------------- | ------------------------ |
-        | @(#)file_info | populated info structure |
+        | type         | description              |
+        | ------------ | ------------------------ |
+        | fd_file_info | populated info structure |
    ------------------------------------------------------------------------- */
-FD_EXPORT struct fdlib_file_info fdlib_win32_stat_file(char const *path);
+FD_EXPORT struct fd_file_info fd_win32_stat_file(char const *path);
 
 FD_EXTERN_END
 

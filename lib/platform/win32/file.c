@@ -29,9 +29,9 @@
 #include "utils/defs.h"
 
 
-struct fdlib_file_info fdlib_win32_stat_file(char const *path)
+struct fd_file_info fd_win32_stat_file(char const *path)
 {
-    struct fdlib_file_info fi = { 0 };
+    struct fd_file_info fi = { 0 };
 
     char out[MAX_PATH] = { 0 };
     char *out_ptr      = out;

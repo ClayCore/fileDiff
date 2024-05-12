@@ -23,15 +23,15 @@ FD_EXTERN_BEGIN
 
         timestamps are stored as 64 bit unsigned integers
     Fields:
-        | type     | name        | description                 |
-        | -------- | ----------- | --------------------------- |
-        | uint64_t | create_time | file creation timestamp     |
-        | uint64_t | access_time | file access timestamp       |
-        | uint64_t | mod_time    | file modification timestamp |
-        | size_t   | namelen     | length of the filename      |
-        | char *   | name        | filename                    |
+        | type    | name        | description                 |
+        | ------- | ----------- | --------------------------- |
+        | int64_t | create_time | file creation timestamp     |
+        | int64_t | access_time | file access timestamp       |
+        | int64_t | mod_time    | file modification timestamp |
+        | size_t  | namelen     | length of the filename      |
+        | char *  | name        | filename                    |
    ------------------------------------------------------------------------- */
-struct fdlib_file_info
+struct fd_file_info
 {
     int64_t create_time;
     int64_t access_time;
@@ -40,18 +40,26 @@ struct fdlib_file_info
     char *name;
 };
 
+
+struct fd_file_ops
+{
+    bool (*compare)(struct fd_file_info const *, struct fd_file_info const *);
+    char *(*hash)(struct fd_file_info const *);
+};
+
+
 #ifdef DEV_WIN32
 
     #include "win32/file.h"  // IWYU pragma: export
     #include "win32/path.h"  // IWYU pragma: export
 
-    #define fdlib_stat_file(p)      (fdlib_win32_stat_file(p))
-    #define fdlib_normalize_path(p) (fdlib_win32_normalize_path(p))
+    #define fd_stat_file(p)      (fd_win32_stat_file(p))
+    #define fd_normalize_path(p) (fd_win32_normalize_path(p))
 #else /* !DEV_WIN32 */
 
     #include "unix/unix.h"  // IWYU pragma: export
 
-    #define fdlib_stat_file(p) (fdlib_unix_stat_file(p))
+    #define fd_stat_file(p) (fd_unix_stat_file(p))
 #endif /* DEV_WIN32 */
 
 FD_EXTERN_END
