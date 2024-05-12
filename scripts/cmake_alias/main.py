@@ -15,17 +15,20 @@ CMAKE_ARGS = {
     'test:lib': [
         'ctest',
         '--test-dir',
-        '$BUILDIR$/lib'
+        '$BUILDDIR$/lib',
+        '--verbose'
     ],
     'test:cli': [
         'ctest',
         '--test-dir',
-        '$BUILDIR$/bin/fileDiffCLI'
+        '$BUILDDIR$/bin/fileDiffCLI',
+        '--verbose'
     ],
     'test:gui': [
         'ctest',
         '--test-dir',
-        '$BUILDIR$/bin/fileDiffGUI'
+        '$BUILDDIR$/bin/fileDiffGUI',
+        '--verbose'
     ],
     'build:debug': [
         'cmake',
@@ -44,14 +47,14 @@ CMAKE_ARGS = {
     'configure:debug': [
         'cmake',
         '-S', '.'
-        '-B', '$BUILDIR$',
+        '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
         '-DCMAKE_BUILD_TYPE=Debug'
     ],
     'configure:release': [
         'cmake',
         '-S', '.'
-        '-B', '$BUILDIR$',
+        '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
         '-DCMAKE_BUILD_TYPE=Release'
     ],
