@@ -26,7 +26,7 @@ There are plans to add [Doxygen](https://www.doxygen.nl/index.html) but the proj
   <dt>CMake version >= 3.21</dt>
   <dd>for building and testing all targets</dd>
   <dt>Python >= 3.11.5</dt>
-  <dd>optional, utility scripts and tasks in `/.vscode/tasks.json`</dd>
+  <dd>optional, utility scripts and tasks in <code>/.vscode/tasks.json</code></dd>
 </dl>
 
 #### Platforms:
