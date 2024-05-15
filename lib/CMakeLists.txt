@@ -27,6 +27,10 @@ target_include_directories(
 )
 target_compile_features(libFileDiff PUBLIC c_std_17)
 
+# add OpenSSL to library
+target_link_libraries(libFileDiff PRIVATE OpenSSL::Crypto)
+target_include_directories(libFileDiff PRIVATE ${OPENSSL_INCLUDE_DIR})
+
 set_target_properties(
   libFileDiff
   PROPERTIES

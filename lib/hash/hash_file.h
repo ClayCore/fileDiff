@@ -9,10 +9,12 @@
 #define FD_HASH_HASH_FILE
 #pragma once
 
+#include "platform/os.h"
 #include "utils/defs.h"
 
 FD_EXTERN_BEGIN
 
+FD_EXPORT char *fd_hash_file(struct fd_file_info *fi);
 
 FD_EXTERN_END
 

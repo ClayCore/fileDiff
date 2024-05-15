@@ -28,6 +28,9 @@ dev_options_global()
 include(cmake/Dependencies.cmake)
 dev_deps_setup()
 
+# Non-CPM dependencies
+find_package(OpenSSL 3.1.2 REQUIRED)
+
 dev_options_local()
 
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
