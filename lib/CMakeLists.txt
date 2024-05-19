@@ -17,6 +17,7 @@ add_library(
 )
 add_library(dev::libFileDiff ALIAS libFileDiff)
 
+target_link_libraries(libFileDiff PUBLIC OpenSSL::Crypto)
 target_link_libraries(libFileDiff PRIVATE dev_options dev_warnings)
 target_include_directories(
   libFileDiff
@@ -26,10 +27,6 @@ target_include_directories(
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
 )
 target_compile_features(libFileDiff PUBLIC c_std_17)
-
-# add OpenSSL to library
-target_link_libraries(libFileDiff PRIVATE OpenSSL::Crypto)
-target_include_directories(libFileDiff PRIVATE ${OPENSSL_INCLUDE_DIR})
 
 set_target_properties(
   libFileDiff
@@ -79,12 +76,6 @@ add_custom_command(
   POST_BUILD
   COMMAND
   ${CMAKE_COMMAND} -E copy $<TARGET_FILE:libFileDiff> ${PROJECT_SOURCE_DIR}/target
-)
-
-add_custom_command(
-  TARGET
-  libFileDiff
-  POST_BUILD
   COMMAND
   ${CMAKE_COMMAND} -E copy $<TARGET_FILE:libFileDiff> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib/test/>
 )
