@@ -14,49 +14,50 @@ import sys
 CMAKE_ARGS = {
     'test:lib': [
         'ctest',
-        '--test-dir',
-        '$BUILDDIR$/lib',
+        '--test-dir', '$BUILDDIR$/lib',
         '--verbose'
     ],
     'test:cli': [
         'ctest',
-        '--test-dir',
-        '$BUILDDIR$/bin/fileDiffCLI',
+        '--test-dir', '$BUILDDIR$/bin/fileDiffCLI',
         '--verbose'
     ],
     'test:gui': [
         'ctest',
-        '--test-dir',
-        '$BUILDDIR$/bin/fileDiffGUI',
+        '--test-dir', '$BUILDDIR$/bin/fileDiffGUI',
         '--verbose'
     ],
     'build:debug': [
         'cmake',
-        '--build',
-        '$BUILDDIR$',
-        '--config',
-        'Debug'
+        '--build', '$BUILDDIR$',
+        '--config', 'Debug',
+        '--verbose'
     ],
     'build:release': [
         'cmake',
-        '--build',
-        '$BUILDDIR$',
-        '--config',
-        'Release'
+        '--build', '$BUILDDIR$',
+        '--config', 'Release'
     ],
     'configure:debug': [
         'cmake',
         '-S', '.',
         '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
+        # '-DMSYSTEM=$MSYSTEM$',
+        # '-DCMAKE_MODULE_PATH=vendor/MSYS2-toolchain/scripts/cmake/Modules',
+        # '-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN$',
         '-DCMAKE_BUILD_TYPE=Debug',
-        '-Ddev_WARNINGS_AS_ERRORS=OFF'
+        '-Ddev_WARNINGS_AS_ERRORS=OFF',
+        '--log-level=DEBUG'
     ],
     'configure:release': [
         'cmake',
         '-S', '.',
         '-B', '$BUILDDIR$',
         '-G', '$GENERATOR$',
+        # '-DMSYSTEM=$MSYSTEM$',
+        # '-DCMAKE_MODULE_PATH=vendor/MSYS2-toolchain/scripts/cmake/Modules',
+        # '-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN$',
         '-DCMAKE_BUILD_TYPE=Release'
     ],
 }
@@ -167,6 +168,8 @@ def main():
 
     build_dir = os.environ['BUILDDIR']
     generator = os.environ['GENERATOR']
+    # toolchain = os.environ['TOOLCHAIN']
+    # msystem = os.environ['MSYSTEM']
 
     if args.clean and not args.test:
         clean_dirs(root_path, build_dir)
@@ -186,6 +189,10 @@ def main():
     cmake_cmdline = [c.replace('$BUILDDIR$', build_dir) for c in cmake_cmdline]
     cmake_cmdline = [c.replace('$GENERATOR$', generator)
                      for c in cmake_cmdline]
+    # cmake_cmdline = [c.replace('$TOOLCHAIN$', toolchain)
+    #                  for c in cmake_cmdline]
+    # cmake_cmdline = [c.replace('$MSYSTEM$', msystem)
+    #                  for c in cmake_cmdline]
 
     # run the commands
     process: sp.CompletedProcess[str] = None
