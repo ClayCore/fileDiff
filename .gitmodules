@@ -1,0 +1,4 @@
+[submodule "vendor/MSYS2-toolchain"]
+	path = vendor/MSYS2-toolchain
+	url = https://github.com/nathanjhood/MSYS2-toolchain.git
+	branch = master
