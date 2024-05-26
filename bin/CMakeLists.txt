@@ -1,2 +1,2 @@
-add_subdirectory(fileDiffCLI)
-add_subdirectory(fileDiffGUI)
+add_subdirectory(bin_tui)
+add_subdirectory(bin_gui)

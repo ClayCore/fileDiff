@@ -9,7 +9,7 @@ if(NOT DEFINED CMAKE_C_STANDARD)
 endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_C_EXTENSIONS ON)
 
 project(
   dev
@@ -50,7 +50,7 @@ dev_add_dir("${CMAKE_SOURCE_DIR}/target")
 add_subdirectory(config)
 
 set(BUILD_SHARED_LIBS ON)
-add_subdirectory(lib)
+add_subdirectory(libs)
 
 set(BUILD_SHARED_LIBS OFF)
 add_subdirectory(bin)
@@ -70,7 +70,7 @@ if(MSVC)
   )
 endif()
 
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT fileDiffCLI)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT bin_tui)
 
 if(CMAKE_SKIP_INSTALL_RULES)
   return()
@@ -80,7 +80,7 @@ include(cmake/PackageProject.cmake)
 
 dev_package_project(
   TARGETS
-  fileDiffCLI
+  bin_tui
   dev_options
   dev_warnings
 )
